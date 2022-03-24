@@ -13,7 +13,12 @@ router.post("/", async (req, res) => {
 
   try {
     const mascotaIncorporada = await nuevaMascota.save();
-    res.status(201).send(mascotaIncorporada);
+    res
+      .status(201)
+      .send({
+        msg: "La mascota ha sido creada correctamente",
+        mascotaIncorporada,
+      });
   } catch (err) {
     res.status(500).json(err);
   }
