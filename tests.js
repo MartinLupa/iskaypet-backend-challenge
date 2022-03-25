@@ -4,7 +4,7 @@ const listaMascotas = [
     nombre: "Micha",
     especie: "gato",
     genero: "hembra",
-    edad: "2",
+    edad: 2,
     fecha_nacimiento: "2010-09-30T22:00:00.000Z",
     createdAt: "2022-03-24T18:44:01.610Z",
     updatedAt: "2022-03-24T18:44:01.610Z",
@@ -15,7 +15,7 @@ const listaMascotas = [
     nombre: "Floppy",
     especie: "gato",
     genero: "hembra",
-    edad: "10",
+    edad: 10,
     fecha_nacimiento: "2006-10-10T22:00:00.000Z",
     createdAt: "2022-03-24T18:44:18.901Z",
     updatedAt: "2022-03-24T18:44:18.901Z",
@@ -26,7 +26,7 @@ const listaMascotas = [
     nombre: "Valky",
     especie: "perro",
     genero: "hembra",
-    edad: "6",
+    edad: 6,
     fecha_nacimiento: "2014-07-06T22:00:00.000Z",
     createdAt: "2022-03-24T18:44:39.977Z",
     updatedAt: "2022-03-24T18:44:39.977Z",
@@ -37,7 +37,7 @@ const listaMascotas = [
     nombre: "Pelusa",
     especie: "gato",
     genero: "hembra",
-    edad: "14",
+    edad: 14,
     fecha_nacimiento: "2001-03-22T23:00:00.000Z",
     createdAt: "2022-03-24T18:55:40.335Z",
     updatedAt: "2022-03-24T18:55:40.335Z",
@@ -48,7 +48,7 @@ const listaMascotas = [
     nombre: "Tommy",
     especie: "gato",
     genero: "macho",
-    edad: "15",
+    edad: 15,
     fecha_nacimiento: "2003-09-18T22:00:00.000Z",
     createdAt: "2022-03-24T18:56:13.849Z",
     updatedAt: "2022-03-24T18:56:13.849Z",
@@ -59,7 +59,7 @@ const listaMascotas = [
     nombre: "Akira",
     especie: "perro",
     genero: "hembra",
-    edad: "7",
+    edad: 7,
     fecha_nacimiento: "2008-06-14T22:00:00.000Z",
     createdAt: "2022-03-24T18:56:19.714Z",
     updatedAt: "2022-03-24T18:56:19.714Z",
@@ -86,4 +86,19 @@ const especieMasNumerosa = (array) => {
   return max;
 };
 
-console.log(especieMasNumerosa(listaMascotas));
+const edadPromedioPorEspecie = (array) => {
+  const conteoPorEspecie = array.reduce((acc, { especie }) => {
+    acc[especie] ? acc[especie]++ : (acc[especie] = 1);
+    return acc;
+  }, {});
+
+  const resultados = array.reduce((acc, { especie, edad, length }) => {
+    acc[especie]
+      ? (acc[especie] += edad / conteoPorEspecie[especie])
+      : (acc[especie] = edad);
+    return acc;
+  }, {});
+  return resultados;
+};
+
+console.log(edadPromedioPorEspecie(listaMascotas));

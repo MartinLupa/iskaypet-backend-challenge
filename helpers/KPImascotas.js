@@ -17,4 +17,22 @@ const calculaEspecieMasNumerosa = (array) => {
   return max;
 };
 
-module.exports = calculaEspecieMasNumerosa;
+const edadPromedioPorEspecie = (array) => {
+  const conteoPorEspecie = array.reduce((acc, { especie }) => {
+    acc[especie] ? acc[especie]++ : (acc[especie] = 1);
+    return acc;
+  }, {});
+
+  const resultados = array.reduce((acc, { especie, edad, length }) => {
+    acc[especie]
+      ? (acc[especie] += edad / conteoPorEspecie[especie])
+      : (acc[especie] = edad);
+    return acc;
+  }, {});
+  return resultados;
+};
+
+module.exports = {
+  calculaEspecieMasNumerosa: calculaEspecieMasNumerosa,
+  edadPromedioPorEspecie: edadPromedioPorEspecie,
+};
