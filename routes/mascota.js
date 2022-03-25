@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Mascota = require("../models/Mascota");
 const {
-  calculaEspecieMasNumerosa,
+  especieMasNumerosa,
   edadPromedioPorEspecie,
 } = require("../helpers/KPImascotas");
 
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
 //ESTADISTICAS - KPI
 router.get("/kpimascotas/", async (req, res) => {
   const listaMascotas = await Mascota.find();
-  const especie = await calculaEspecieMasNumerosa(listaMascotas, "especie");
+  const especie = await especieMasNumerosa(listaMascotas, "especie");
   const promedio = await edadPromedioPorEspecie(listaMascotas);
 
   res.send({

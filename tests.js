@@ -92,9 +92,9 @@ const edadPromedioPorEspecie = (array) => {
     return acc;
   }, {});
 
-  const resultados = array.reduce((acc, { especie, edad, length }) => {
+  const resultados = array.reduce((acc, { especie, edad }) => {
     acc[especie]
-      ? (acc[especie] += edad / conteoPorEspecie[especie])
+      ? (acc[especie] += parseInt(edad / conteoPorEspecie[especie]))
       : (acc[especie] = edad);
     return acc;
   }, {});

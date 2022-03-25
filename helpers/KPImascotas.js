@@ -2,9 +2,10 @@
 Recursos: 
 https://stackoverflow.com/questions/60565526/count-duplicate-property-values-of-a-nested-javascript-object
 https://stackoverflow.com/questions/27376295/getting-key-with-the-highest-value-from-object
+https://www.youtube.com/watch?v=s1XVfm5mIuU - Uso de .reduce()
 */
 
-const calculaEspecieMasNumerosa = (array) => {
+const especieMasNumerosa = (array) => {
   const resultados = array.reduce((acc, { especie }) => {
     acc[especie] ? acc[especie]++ : (acc[especie] = 1);
     return acc;
@@ -23,16 +24,16 @@ const edadPromedioPorEspecie = (array) => {
     return acc;
   }, {});
 
-  const resultados = array.reduce((acc, { especie, edad, length }) => {
+  const resultados = array.reduce((acc, { especie, edad }) => {
     acc[especie]
-      ? (acc[especie] += edad / conteoPorEspecie[especie])
-      : (acc[especie] = edad);
+      ? (acc[especie] += parseInt(edad / conteoPorEspecie[especie]))
+      : (acc[especie] = parseInt(edad));
     return acc;
   }, {});
   return resultados;
 };
 
 module.exports = {
-  calculaEspecieMasNumerosa: calculaEspecieMasNumerosa,
+  especieMasNumerosa: especieMasNumerosa,
   edadPromedioPorEspecie: edadPromedioPorEspecie,
 };
