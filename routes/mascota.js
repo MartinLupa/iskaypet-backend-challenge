@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Mascota = require("../models/Mascota");
+const calculaEspecieMasNumerosa = require("../helpers/KPImascotas");
 
 //CREAR MASCOTA
 router.post("/", async (req, res) => {
@@ -13,12 +14,10 @@ router.post("/", async (req, res) => {
 
   try {
     const mascotaIncorporada = await nuevaMascota.save();
-    res
-      .status(201)
-      .send({
-        msg: "La mascota ha sido creada correctamente",
-        mascotaIncorporada,
-      });
+    res.status(201).send({
+      msg: "La mascota ha sido creada correctamente",
+      mascotaIncorporada,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -36,12 +35,13 @@ router.get("/", async (req, res) => {
 
 //ESTADISTICAS - KPI
 router.get("/kpimascotas/", async (req, res) => {
-  const especieMasNumerosa = await Mascota.find({ especie: "perro" });
+  const listaMascotas = await Mascota.find();
+  const especie = await calculaEspecieMasNumerosa(listaMascotas, "especie");
+
   res.send({
-    "Especie mas numerosa": especieMasNumerosa,
-    "Edad promedio de perros": "A calcular",
-    "Edad promedio de gatos": "A calcular",
-    "Desviación estandar entre edades": "A calcular",
+    "Especie mas numerosa": especie,
+    "Edad promedio por especie": "A calcular",
+    "Desviación estandar edades por especie": "A calcular",
   });
 });
 
