@@ -1,3 +1,4 @@
+const math = require("mathjs");
 /*
 Recursos: 
 https://stackoverflow.com/questions/60565526/count-duplicate-property-values-of-a-nested-javascript-object
@@ -33,7 +34,23 @@ const edadPromedioPorEspecie = (array) => {
   return resultados;
 };
 
+const desviacionEstandarEdadesPorEspecie = (array) => {
+  const especies = [];
+  const resultados = array.reduce((acc, { especie, edad }) => {
+    acc[especie]
+      ? acc[especie].push(edad)
+      : (acc[especie] = [edad]) && especies.push(especie);
+    return acc;
+  }, {});
+  especies.forEach((especie) => {
+    return (resultados[especie] = math.std(resultados[especie]));
+  });
+
+  return resultados;
+};
+
 module.exports = {
   especieMasNumerosa: especieMasNumerosa,
   edadPromedioPorEspecie: edadPromedioPorEspecie,
+  desviacionEstandarEdadesPorEspecie: desviacionEstandarEdadesPorEspecie,
 };

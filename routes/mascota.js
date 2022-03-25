@@ -3,6 +3,7 @@ const Mascota = require("../models/Mascota");
 const {
   especieMasNumerosa,
   edadPromedioPorEspecie,
+  desviacionEstandarEdadesPorEspecie,
 } = require("../helpers/KPImascotas");
 
 //CREAR MASCOTA
@@ -41,11 +42,12 @@ router.get("/kpimascotas/", async (req, res) => {
   const listaMascotas = await Mascota.find();
   const especie = await especieMasNumerosa(listaMascotas, "especie");
   const promedio = await edadPromedioPorEspecie(listaMascotas);
+  const desviacionEstandar = desviacionEstandarEdadesPorEspecie(listaMascotas);
 
   res.send({
     "Especie mas numerosa": especie,
     "Edad promedio por especie": promedio,
-    "Desviación estandar edades por especie": "A calcular",
+    "Desviación estandar edades por especie": desviacionEstandar,
   });
 });
 

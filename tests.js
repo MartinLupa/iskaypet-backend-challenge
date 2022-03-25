@@ -1,3 +1,4 @@
+const math = require("mathjs");
 const listaMascotas = [
   {
     _id: "623cbbf11ac998404462c0e9",
@@ -101,4 +102,23 @@ const edadPromedioPorEspecie = (array) => {
   return resultados;
 };
 
-console.log(edadPromedioPorEspecie(listaMascotas));
+const desviacionEstandarEdadesPorEspecie = (array) => {
+  const especies = [];
+  const resultados = array.reduce((acc, { especie, edad }) => {
+    acc[especie]
+      ? acc[especie].push(edad)
+      : (acc[especie] = [edad]) && especies.push(especie);
+    return acc;
+  }, {});
+  especies.forEach((especie) => {
+    return (resultados[especie] = math.std(resultados[especie]));
+  });
+
+  return resultados;
+};
+console.log(desviacionEstandarEdadesPorEspecie(listaMascotas));
+
+// for (const [key, value] of Object.entries(resultados)) {
+//   return key, math.std(value);
+// }
+// return resultados;
