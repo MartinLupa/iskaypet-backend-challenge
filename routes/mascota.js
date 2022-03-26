@@ -6,7 +6,50 @@ const {
   desviacionEstandarEdadesPorEspecie,
 } = require("../helpers/KPImascotas");
 
+//DOCUMENTACION ESQUEMA
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Mascota:
+ *      type: object
+ *      properties:
+ *        nombre:
+ *          type: string
+ *        especie:
+ *          type: string
+ *        genero:
+ *          type: string
+ *        edad:
+ *          type: integer
+ *        fecha_nacimiento:
+ *          type: string
+ *      required:
+ *        - nombre
+ *        - especie
+ *        - genero
+ *        - edad
+ *        - fecha_nacimiento
+ */
+
 //CREAR MASCOTA
+/**
+ * @swagger
+ * /api/mascotas:
+ *  post:
+ *    summary: Permite incorporar una nueva mascota a la base de datos.
+ *    tags: [Mascota]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            $ref: '#/components/schemas/Mascota'
+ *    responses:
+ *      201:
+ *        description: La mascota ha sido creada correctamente
+ */
 router.post("/", async (req, res) => {
   const nuevaMascota = new Mascota({
     nombre: req.body.nombre,
@@ -28,6 +71,16 @@ router.post("/", async (req, res) => {
 });
 
 //CONSULTAR TODAS LAS MASCOTAS
+/**
+ * @swagger
+ * /api/mascotas:
+ *  get:
+ *    summary: Permite visualizar la lista de mascotas disponibles en la base de datos.
+ *    tags: [Mascota]
+ *    responses:
+ *     200:
+ *       description: Se envía el archivo JSON con la información solicitada.
+ */
 router.get("/", async (req, res) => {
   try {
     const mascotas = await Mascota.find();
@@ -38,6 +91,16 @@ router.get("/", async (req, res) => {
 });
 
 //ESTADISTICAS - KPI
+/**
+ * @swagger
+ * /api/mascotas/kpimascotas:
+ *  get:
+ *    summary: Permite visualizar la lista de KPIs calculados para los datos disponibles.
+ *    tags: [Mascota]
+ *    responses:
+ *     200:
+ *       description: Se envía el archivo JSON con la información solicitada.
+ */
 router.get("/kpimascotas/", async (req, res) => {
   const listaMascotas = await Mascota.find();
   const especie = await especieMasNumerosa(listaMascotas, "especie");
