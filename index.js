@@ -4,7 +4,6 @@ const app = express();
 const dotenv = require("dotenv");
 const mascotaRoute = require("./routes/mascota");
 const mongoose = require("mongoose");
-
 dotenv.config();
 const port = process.env.PORT || 3000;
 
@@ -14,6 +13,10 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(bodyParser.json());
+
+//Servir contenido estático
+app.use(express.static("public"));
+
 app.use("/api/mascotas", mascotaRoute);
 
 app.listen(port, () => {

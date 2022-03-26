@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&family=Lato:ital,wght@1,300;1,400;1,700;1,900&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        height: 96vh;
+        width: 98vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Gothic A1", sans-serif;
+        color: #cb333b;
+      }
+      a {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        text-decoration: none;
+      }
+      div {
+        padding: 20px;
+        border: 1px solid rgb(190, 189, 189);
+        border-radius: 5px;
+      }
+      hr {
+        border: 1px solid rgb(223, 221, 221);
+      }
+    </style>
+    <title>Iskaypet Backend API</title>
+  </head>
+  <body>
+    <div>
+      <h1>Iskaypet Backend Challenge</h1>
+      <hr />
+      <h4>GET a /api/mascotas</h4>
+      <p>Lista de mascotas disponibles en la base de datos</p>
+      <h4>POST a /api/mascotas</h4>
+      <p>
+        Permite incorporar una nueva mascota a la base de datos. Esquema
+        admitido disponible en models - Mascota.js
+      </p>
+      <h4>GET a /api/mascotas/kpimascotas</h4>
+      <p>KPI de mascotas solicitados</p>
+      <ul>
+        <li>Especie más numeroas.</li>
+        <li>Edad promedio por especie.</li>
+        <li>Desviación estandar edades por especie.</li>
+      </ul>
+      <hr />
+      <a href="/api/mascotas">GET /api/mascotas</a>
+      <a href="/api/mascotas/kpimascotas">GET /api/mascotas/kpimascotas </a>
+    </div>
+  </body>
+</html>
