@@ -4,6 +4,13 @@ const dotenv = require("dotenv");
 const mascotaRoute = require("./routes/mascota");
 const mongoose = require("mongoose");
 const path = require("path");
+const cors = require("cors");
+
+//Settings
+const app = express();
+const port = process.env.PORT || 3000;
+app.use(cors());
+dotenv.config();
 
 //Swagger
 const swaggerUI = require("swagger-ui-express");
@@ -18,16 +25,12 @@ const swaggerSpec = {
     servers: [
       {
         url: "http://localhost:3000",
+        url: "https://iskaypet-backend-challenge.herokuapp.com/",
       },
     ],
   },
   apis: [`${path.join(__dirname, "./routes/*.js")}`],
 };
-
-//Settings
-const app = express();
-const port = process.env.PORT || 3000;
-dotenv.config();
 
 //Base de datos
 mongoose
@@ -43,9 +46,10 @@ app.use(
   swaggerUI.setup(swaggerJsDoc(swaggerSpec))
 );
 
-//Servir contenido estático
+//Contenido estático
 app.use(express.static("public"));
 
+//Rutas
 app.use("/api/mascotas", mascotaRoute);
 
 app.listen(port, () => {
