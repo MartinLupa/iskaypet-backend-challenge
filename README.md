@@ -6,7 +6,7 @@ Node API done using Express, documented with Swagger and deployed to Heroku.
 Endpoints:
 
 - GET api/mascotas: returns JSON with the full list of pets in the database.
-- POST api/mascotas: allows to add pets. Check schema in models/Mascota.JSON
+- POST api/mascotas: allows to add pets. Check schema in models - Mascota.js
 - GET api/mascotas/kpimascotas: returns JSON with calculated KPIs.
 
 ## Deployment
