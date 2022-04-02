@@ -1,5 +1,4 @@
 const express = require("express");
-var bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mascotaRoute = require("./routes/mascota");
 const mongoose = require("mongoose");
@@ -39,7 +38,8 @@ mongoose
   .catch((err) => console.log(err));
 
 //Middlewares
-app.use(bodyParser.json());
+app.use(express.json()); //Usado para parsear JSON, previamente se usó app.use(bodyParser.json());
+
 app.use(
   "/api-doc",
   swaggerUI.serve,

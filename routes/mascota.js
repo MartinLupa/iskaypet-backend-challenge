@@ -51,6 +51,7 @@ const {
  *        description: La mascota ha sido creada correctamente
  */
 router.post("/", async (req, res) => {
+  //Validar info recibida.
   const nuevaMascota = new Mascota({
     nombre: req.body.nombre,
     especie: req.body.especie,
@@ -59,6 +60,7 @@ router.post("/", async (req, res) => {
     fecha_nacimiento: req.body.fecha_nacimiento,
   });
 
+  //Ver blocking - non blocking
   try {
     const mascotaIncorporada = await nuevaMascota.save();
     res.status(201).send({
@@ -83,7 +85,7 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    const mascotas = await Mascota.find();
+    const mascotas = await Mascota.find().limit(2);
     res.status(200).json(mascotas);
   } catch (err) {
     res.status(500).json(err);
