@@ -113,17 +113,16 @@ router.get("/", async (req, res) => {
  *    responses:
  *     200:
  *       description: Se envía el archivo JSON con la información solicitada.
- *    500:
+ *     500:
  *       description: Error del servidor.
  */
 router.get("/kpimascotas/", async (req, res) => {
-  try {
-    const listaMascotas = await Mascota.find();
-    const especie = await especieMasNumerosa(listaMascotas, "especie");
-    const promedio = await edadPromedioPorEspecie(listaMascotas);
-    const desviacionEstandar =
-      desviacionEstandarEdadesPorEspecie(listaMascotas);
+  const listaMascotas = await Mascota.find();
+  const especie = especieMasNumerosa(listaMascotas, "especie");
+  const promedio = edadPromedioPorEspecie(listaMascotas);
+  const desviacionEstandar = desviacionEstandarEdadesPorEspecie(listaMascotas);
 
+  try {
     res.send({
       error: false,
       message: "KPIs",
@@ -134,9 +133,7 @@ router.get("/kpimascotas/", async (req, res) => {
       },
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ error: true, message: "Algo no funcionó.", data: err });
+    res.status(500).json({ error: true, message: "Algo no funcionó." });
   }
 });
 
