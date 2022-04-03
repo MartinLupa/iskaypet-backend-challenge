@@ -49,6 +49,8 @@ const {
  *    responses:
  *      201:
  *        description: La mascota ha sido creada correctamente
+ *      500:
+ *        description: Error del servidor.
  */
 router.post("/", async (req, res) => {
   const nuevaMascota = new Mascota({
@@ -62,11 +64,14 @@ router.post("/", async (req, res) => {
   try {
     const mascotaIncorporada = await nuevaMascota.save();
     res.status(201).send({
-      msg: "La mascota ha sido creada correctamente",
-      mascotaIncorporada,
+      error: false,
+      message: "La mascota ha sido creada correctamente",
+      data: mascotaIncorporada,
     });
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .json({ error: true, message: "Algo no funcionó.", data: err });
   }
 });
 
@@ -80,13 +85,21 @@ router.post("/", async (req, res) => {
  *    responses:
  *     200:
  *       description: Se envía el archivo JSON con la información solicitada.
+ *     500:
+ *       description: Error del servidor.
  */
 router.get("/", async (req, res) => {
   try {
     const mascotas = await Mascota.find();
-    res.status(200).json(mascotas);
+    res.status(200).json({
+      error: false,
+      message: "Lista completa de mascotas.",
+      data: mascotas,
+    });
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .json({ error: true, message: "Algo no funcionó.", data: err });
   }
 });
 
@@ -100,18 +113,31 @@ router.get("/", async (req, res) => {
  *    responses:
  *     200:
  *       description: Se envía el archivo JSON con la información solicitada.
+ *    500:
+ *       description: Error del servidor.
  */
 router.get("/kpimascotas/", async (req, res) => {
-  const listaMascotas = await Mascota.find();
-  const especie = await especieMasNumerosa(listaMascotas, "especie");
-  const promedio = await edadPromedioPorEspecie(listaMascotas);
-  const desviacionEstandar = desviacionEstandarEdadesPorEspecie(listaMascotas);
+  try {
+    const listaMascotas = await Mascota.find();
+    const especie = await especieMasNumerosa(listaMascotas, "especie");
+    const promedio = await edadPromedioPorEspecie(listaMascotas);
+    const desviacionEstandar =
+      desviacionEstandarEdadesPorEspecie(listaMascotas);
 
-  res.send({
-    "Especie mas numerosa": especie,
-    "Edad promedio por especie": promedio,
-    "Desviación estandar edades por especie": desviacionEstandar,
-  });
+    res.send({
+      error: false,
+      message: "KPIs",
+      data: {
+        especie_mas_numerosa: especie,
+        edad_promedio_por_especie: promedio,
+        desviacion_estandar_edad_por_especie: desviacionEstandar,
+      },
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: true, message: "Algo no funcionó.", data: err });
+  }
 });
 
 module.exports = router;

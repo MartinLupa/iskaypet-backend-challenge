@@ -1,5 +1,4 @@
 const express = require("express");
-var bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const mascotaRoute = require("./routes/mascota");
 const mongoose = require("mongoose");
@@ -15,6 +14,7 @@ dotenv.config();
 //Swagger
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+const { nextTick } = require("process");
 const swaggerSpec = {
   definition: {
     openapi: "3.0.0",
@@ -39,7 +39,7 @@ mongoose
   .catch((err) => console.log(err));
 
 //Middlewares
-app.use(bodyParser.json());
+app.use(express.json()); //Usado para parsear JSON, previamente se usó app.use(bodyParser.json());
 app.use(
   "/api-doc",
   swaggerUI.serve,
@@ -51,6 +51,11 @@ app.use(express.static("public"));
 
 //Rutas
 app.use("/api/mascotas", mascotaRoute);
+
+//Manejo de errores general
+app.use((req, res) => {
+  res.status(404).json({ error: true, message: "Recurso no encontrado." });
+});
 
 app.listen(port, () => {
   console.log("Servidor funcionando en puerto: ", port);
