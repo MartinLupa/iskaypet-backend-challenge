@@ -14,7 +14,6 @@ dotenv.config();
 //Swagger
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
-const { nextTick } = require("process");
 const swaggerSpec = {
   definition: {
     openapi: "3.0.0",

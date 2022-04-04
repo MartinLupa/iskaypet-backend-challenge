@@ -40,6 +40,8 @@ const edadPromedioPorEspecie = (array) => {
     //El valor de cada clave representa el promedio de edad por especie.
     return acc;
   }, {});
+  //El valor de cada clave representa el promedio de edad por especie.
+  //Ejemplo: {perro: 10, gato: 9}
   return resultados;
 };
 
