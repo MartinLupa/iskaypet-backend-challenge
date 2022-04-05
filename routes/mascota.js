@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    const mascotas = await Mascota.find().limit(2);
+    const mascotas = await Mascota.find();
     res.status(200).json(mascotas);
   } catch (err) {
     res.status(500).json(err);
